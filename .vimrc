@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " author: yanfei.zhang
 " 
-" Last-modified: 05 May 2014 04:08:43 PM
+" Last-modified: 	2014-05-07 15:53:58
 """"""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
 "call pathogen#runtime_append_all_bundles()
@@ -34,23 +34,30 @@ set shiftwidth=4
 " always  set auto indenting on,but unexpected indent at parse code
 "set autoindent
 
-" set the commandheight 
+" set the command height at bottom 
 set cmdheight=2
+
+"  
+"set scrolloff=3     
 
 " set char encoding
 set encoding=utf-8
+" convert typed and displayed text
+set termencoding=utf-8
+set fileencoding=utf-8
 
 set expandtab
 set number
 
-
 set ignorecase
+
+set foldenable      
 set foldmethod=manual
 
 " show the cursor position(line,column) all the time at bottom right corner
 set ruler
 
-" show (partial) commands ???
+" show inputed command
 set showcmd
 
 " do incremental searches (annoying but handy);
@@ -62,7 +69,7 @@ set hlsearch
 " set list
 
 " set status line
-set statusline=[%02n]\ %f\ %(\[%m%r%h]%)%=\ %4l,%02c%2v\ %p%*
+set statusline=[%02n]\ \%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [OPEN-TIME=%{strftime(\"%Y/%m/%d\ %H:%M\")}]
 " always display a status line at the bottom of the window
 set laststatus=2
 
@@ -73,6 +80,7 @@ se showmatch
 set confirm
 
 "colorscheme darkblue
+"colorscheme murphy
 colorscheme desert 
 
 
@@ -84,7 +92,7 @@ if has('gui_running')
      "  2 for the command line
      set lines=52
      " add columns for the project plugin
-     set columns=110
+     set columns=109
      " enable use of mouse
      set mouse=a
 endif
@@ -96,22 +104,26 @@ let g:explvertical=1    " open vertical split winow
 let g:explsplitright=1  " put new window to the right of the explorer
 let g:explstartright=0  " new windows go to right of explorer window
 
-
 " for the TOhtml command
-let html_use_css=1
+let g:html_use_css=1
 
+" define my basic info
+let g:mauthor="yanfei.zhang"
+let g:memail="gisboxwinner@email.com"
 
 if has("gui")
-  " set the gui options to:
-  "   g: grey inactive menu items
-  "   m: display menu bar
-  "   r: display scrollbar on right side of window
-  "   b: display scrollbar at bottom of window
+    " set the gui options to:
+    "   g: grey inactive menu items
+    "   m: display menu bar
+    "   r: display scrollbar on right side of window
+    "   b: display scrollbar at bottom of window
 
-  "   t: enable tearoff menus on Win32
-  "   T: enable toolbar on Win32
-  set go=gmr
-  set guifont=Courier
+    "   t: enable tearoff menus on Win32
+    "   T: enable toolbar on Win32
+    set go=gmr
+    set guifont=DejaVu\ Sans\ mono\ 11    " escape spae 
+
+    winpos 5 5                     " window display position 
 endif
 
 
@@ -163,7 +175,6 @@ inoremap <C-e> <End>
 
 " select paragraph
 ":noremap <F2> vip
-
 
 
 " ************************************************************************
@@ -224,14 +235,9 @@ if has("autocmd")
     \   exe "normal g`\"" |
     \ endif
 
-  " Normally don't automatically format 'text' as it is typed, only do this
-  " with comments, at 79 characters.
-  au BufNewFile,BufEnter *.c,*.h,*.java,*.jsp set formatoptions-=t tw=79
+  autocmd InsertLeave * se nocul  " highlight current line using light-colored
+  autocmd InsertEnter * se cul    " same with upper line 
 
-  " add an autocommand to update an existing time stamp when writing the file 
-  " It uses the functions above to replace the time stamp and restores cursor 
-  " position afterwards (this is from the FAQ) 
-  autocmd BufWritePre,FileWritePre *   ks|call UpdateTimeStamp()|'s
 endif " has("autocmd")
 
 
@@ -268,13 +274,34 @@ endif
 "  F U N C T I O N S
 "
 
-" first add a function that returns a time stamp in the desired format 
-if !exists("*TimeStamp")
-    fun TimeStamp()
-        return "Last-modified: " . strftime("%d %b %Y %X")
+" my formated time 
+if !exists("*MyTimeFormat")
+    fun MyTimeFormat()
+        return strftime("%T")
     endfun
 endif
 
+" my formated date 
+if !exists("*MyDateFormat")
+    fun MyDateFormat()
+        return strftime("%Y-%m-%d")
+    endfun
+endif
+
+" my formated datetime
+if !exists("*MyDateTimeFormat")
+    fun MyDateTimeFormat()
+        return MyDateFormat() . " " . MyTimeFormat()
+    endfun
+endif
+
+
+" first add a function that returns a time stamp in the desired format 
+if !exists("*TimeStamp")
+    fun TimeStamp()
+        return "Last-modified: \t" . MyDateTimeFormat()
+    endfun
+endif
 
 " searches the first ten lines for the timestamp and updates using the
 " TimeStamp function
