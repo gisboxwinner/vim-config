@@ -69,7 +69,7 @@ set hlsearch
 " set list
 
 " set status line
-set statusline=[%02n]\ \%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [OPEN-TIME=%{strftime(\"%Y/%m/%d\ %H:%M\")}]
+set statusline=[%02n]\ \%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l/%L,%v][%p%%]\ [OPEN-TIME=%{strftime(\"%m/%d\ %H:%M\")}]
 " always display a status line at the bottom of the window
 set laststatus=2
 
