@@ -4,14 +4,73 @@
 " Last-modified: 	2014-05-07 15:53:58
 """"""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
-"call pathogen#runtime_append_all_bundles()
-if has("pathogen")
-    call pathogen#infect()
-    call pathogen#helptags()
-endif
+
+"plugin manager for pathogen{{
+"if has("pathogen")
+"    execute pathogen#infect()
+"    call pathogen#infect()
+"    call pathogen#helptags()
+"endif
+"}}
+
+
+"plugin manager for vundle setting {{{
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" format for github: Bundle 'username/prjname'
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" original repos on github
+Bundle 'kien/ctrlp.vim'
+Bundle 'sukima/xmledit'
+Bundle 'sjl/gundo.vim'
+Bundle 'jiangmiao/auto-pairs'
+Bundle 'klen/python-mode'
+Bundle 'Valloric/ListToggle'
+Bundle 'SirVer/ultisnips'
+"YouCompleteMe unavailable: requires Vim 7.3.584+ {{{
+"Bundle 'Valloric/YouCompleteMe'
+"}}}
+"syntastic a syntax checking plugin{{{
+Bundle 'scrooloose/syntastic'
+" ref-url: https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_qw = 1             
+let g:syntastic_enable_perl_checker = 1
+let g:syntastic_perl_checkers = ['perl','podchecker']
+let g:syntastic_shell_checkers = ['ShellCheck','sh','checkbashisms']
+let g:syntastic_python_checkers = ['python','pylint']
+let g:syntastic_ruby= ['rubylint']
+let g:syntastic_loc_list_height = 5
+"}}}
+Bundle 't9md/vim-quickhl'
+" Bundle 'Lokaltog/vim-powerline'
+Bundle 'scrooloose/nerdcommenter'
+
+" vim-scripts repos  at github
+Bundle "vim-scripts/header.vim"
+Bundle 'YankRing.vim'
+Bundle 'vcscommand.vim'
+Bundle 'ShowPairs'
+Bundle 'SudoEdit.vim'
+Bundle 'EasyGrep'
+Bundle 'VOoM'
+Bundle 'VimIM'
+
+
+" or
+" remote non git repos
+" Bundle 'https://github.com/username/prjname'
+" your local machine 
+" Bundle 'file:///Users/gmarik/path/to/plugin'
+"}}}
+
 
 " unexpected comment or indentat parse code
-"filetype plugin  on    " comment inherit at paste
+"filetype plugin on    " comment inherit at paste
 "filetype indent on     " more indent at paste
 
 syntax on
@@ -28,8 +87,12 @@ set nocompatible
 
 "set smarttab
 
+"tab setting {{
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
+set expandtab
+"}}
 
 " always  set auto indenting on,but unexpected indent at parse code
 "set autoindent
@@ -37,16 +100,20 @@ set shiftwidth=4
 " set the command height at bottom 
 set cmdheight=2
 
-"  
+" occur scroll at bottom 3
 "set scrolloff=3     
 
-" set char encoding
-set encoding=utf-8
-" convert typed and displayed text
-set termencoding=utf-8
+"encoding {{
+" set encoding for buffers/msg,etc
+set encoding=utf-8 "local
+" set multi encodings to suggest on opened for file conent
+set fileencodings=utf-8,gb2312
+" set encoding on saved for file content
 set fileencoding=utf-8
+" displayed text for terminal
+set termencoding=utf-8
+"}}
 
-set expandtab
 set number
 
 set ignorecase
@@ -69,7 +136,15 @@ set hlsearch
 " set list
 
 " set status line
-set statusline=[%02n]\ \%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l/%L,%v][%p%%]\ [OPEN-TIME=%{strftime(\"%m/%d\ %H:%M\")}]
+set statusline+=[%02n]\ \%F%m%r%h%w\ [%{(&fenc==\"\"?&enc:&fenc)}]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l/%L,%v][%p%%]\ [OPEN-TIME=%{strftime(\"%m/%d\ %H:%M\")}]
+"syntastic {{{
+set statusline+=%{SyntasticStatuslineFlag()}
+highlight SyntasticErrorSign guifg=white guibg=red
+highlight SyntasticError guibg=#2f0000
+" }}}
+"if has('syntastic')
+    "set statusline+=%{SyntasticStatuslineFlag()}
+"endif
 " always display a status line at the bottom of the window
 set laststatus=2
 
@@ -78,6 +153,11 @@ se showmatch
 
 " pop confirm dialog at changed or readonly file
 set confirm
+
+set colorcolumn=85           " color show at 85 column
+set t_Co=256                 " 256 color
+"set cursorline               " highlight line vertical
+"set cursorcolumn             " highlight column horizonal
 
 "colorscheme darkblue
 "colorscheme murphy
@@ -94,10 +174,14 @@ if has('gui_running')
      " add columns for the project plugin
      set columns=109
      " enable use of mouse
-     set mouse=a
+ 
+    set mouse=a
 endif
 
 
+" ************************************************************************
+" ARGUMENTS SETTING 
+"
 " commands for :explore
 " g: global var
 let g:explvertical=1    " open vertical split winow
@@ -130,16 +214,17 @@ endif
 " ************************************************************************
 " K E Y   M A P P I N G S
 "
-"map <Leader>e :Explore<cr>
-"map <Leader>s :Sexplore<cr>
-
+let mapleader=","
+map <Leader>e :Explore<cr>
+map <Leader>se :Sexplore<cr>
+map <Leader>he :Hexplore<cr>
+map <Leader>ve :Vexplore<cr>
 
 " last modifed datetime
-map ,L    :let @z=TimeStamp()<Cr>"zpa
-map ,datetime :let @z=strftime("%Y-%m-%d %H:%M:%S")<Cr>"zpa
-map ,date :let @z=strftime("%Y-%m-%d")<Cr>"zpa
-map ,time :let @z=strftime("%H:%M:%S")<Cr>"zpa
-
+map <Leader>L    :let @z=TimeStamp()<Cr>"zpa
+map <Leader>datetime :let @z=strftime("%Y-%m-%d %H:%M:%S")<Cr>"zpa
+map <Leader>date :let @z=strftime("%Y-%m-%d")<Cr>"zpa
+map <Leader>time :let @z=strftime("%H:%M:%S")<Cr>"zpa
 
 map <F2> <c-o>:w<CR>
 
@@ -163,6 +248,8 @@ imap <C-z> <c-o>u
 " multi mode(insert/normal/command...) move cursor
 inoremap <C-h> <left>
 inoremap <C-l> <Right>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
 
 inoremap <C-b> <C-o>b
 inoremap <C-f> <C-o>w
