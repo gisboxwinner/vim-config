@@ -241,6 +241,9 @@ map <C-a> ggVG
 " Undo in insert mode. insert map
 imap <C-z> <c-o>u
 
+" system key ctrl+C to copy selected content at visual mode
+vmap <C-C> "+y
+
 " generate ctags file 
 "map <C-F9> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
