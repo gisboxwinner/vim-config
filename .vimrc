@@ -15,7 +15,7 @@ filetype off
 
 
 "plugin manager for vundle setting {{{
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 " format for github: Bundle 'username/prjname'
