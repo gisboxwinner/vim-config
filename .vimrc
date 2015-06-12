@@ -15,6 +15,7 @@ filetype off
 
 
 "plugin manager for vundle setting {{{
+"set rtp+=~/.vim/bundle/vundle/
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
@@ -59,6 +60,38 @@ Bundle 'SudoEdit.vim'
 Bundle 'EasyGrep'
 Bundle 'VOoM'
 Bundle 'VimIM'
+
+call vundle#begin()
+Plugin 'gmarik/vundle'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'The-NERD-tree'
+Plugin 'Tagbar'
+Plugin 'bling/vim-airline'
+"Plugin 'Lokaltog/vim-powerline.git'
+Plugin 'terryma/vim-multiple-cursors.git'
+Plugin 'a.vim'
+"Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Yggdroot/indentLine'
+Plugin 'minibufexpl.vim'
+Plugin 'clang-complete'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+Plugin 'ctrlp.vim'
+Plugin 'molokai'
+Plugin 'Keithbsmiley/investigate.vim'
+Plugin 'mattn/gist-vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdcommenter'
+"Plugin 'FriedSock/smeargle'
+"Plugin 'snipMate'
+"Plugin 'OmniCppComplete'
+Plugin 'mbbill/undotree'
+"Plugin 'vim-scripts/UltiSnips'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'garbas/vim-snipmate'
+
+call vundle#end()
 
 
 " or
@@ -154,14 +187,15 @@ se showmatch
 " pop confirm dialog at changed or readonly file
 set confirm
 
-set colorcolumn=85           " color show at 85 column
+" set colorcolumn=85           " color show at 85 column
 set t_Co=256                 " 256 color
 "set cursorline               " highlight line vertical
 "set cursorcolumn             " highlight column horizonal
 
 "colorscheme darkblue
 "colorscheme murphy
-colorscheme desert 
+"colorscheme desert 
+colorscheme molokai
 
 
 " set 52 lines for the display, 1 for the status line.
@@ -265,6 +299,20 @@ inoremap <C-e> <End>
 
 " select paragraph
 ":noremap <F2> vip
+
+""""""""""""""""""""
+imap <C-f> <ESC>:FufBuffer <cr>
+nnoremap <F3> :NERDTreeToggle <cr>
+nnoremap <F4> :TagbarToggle <cr>
+nnoremap <F5> :UndotreeToggle <cr>
+nnoremap <F10> :PluginUpdate <cr>
+
+nmap <silent> <leader>f :FufBuffer <cr>
+nmap <silent> <leader>q :q <cr>
+nmap <silent> <leader>w :w <cr>
+nmap <silent> <leader>a :A <cr>
+
+""""""""""""""""""""
 
 
 " ************************************************************************
