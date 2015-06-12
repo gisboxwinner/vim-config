@@ -319,17 +319,17 @@ nmap <silent> <leader>a :A <cr>
 " KEY F{1-12}  compile debug execute
 "
 "F5 execute
- map <F5> :call CompileRunGcc()<CR>
- func! CompileRunGcc()
-     exec "w"
-     "exec "!rm -f %<.o"
-     if &filetype == "c"
-         exec "!gcc -Wall -lm % -o %<.o -I . "
-     elseif &filetype == "cpp"
-         exec "!g++ -Wall -lm % -o %<.o -I .  " 
-     endif
-     "exec "!echo % compile finish."
- endfunc
+" map <F5> :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+"     exec "w"
+"     "exec "!rm -f %<.o"
+"     if &filetype == "c"
+"         exec "!gcc -Wall -lm % -o %<.o -I . "
+"     elseif &filetype == "cpp"
+"         exec "!g++ -Wall -lm % -o %<.o -I .  " 
+"     endif
+"     "exec "!echo % compile finish."
+" endfunc
 
  "F6 execute
  map <F6> :call RunApp()<CR>
