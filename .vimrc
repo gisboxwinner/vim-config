@@ -1,6 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " author: yanfei.zhang
-" 
+"ll 
 " Last-modified: 	2014-05-07 15:53:58
 """"""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
@@ -89,10 +89,10 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'mbbill/undotree'
 "Plugin 'vim-scripts/UltiSnips'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin "tomtom/tlib_vim"
-Plugin 'garbas/vim-snipmate'
+"Plugin "tomtom/tlib_vim"
+"Plugin 'garbas/vim-snipmate'
 " Optional:
-Plugin "honza/vim-snippets"
+"Plugin "honza/vim-snippets"
 
 
 call vundle#end()
@@ -252,13 +252,16 @@ endif
 " ************************************************************************
 " K E Y   M A P P I N G S
 "
+" leader 按键定义,  逗号
 let mapleader=","
 map <Leader>e :Explore<cr>
+" cr  回车
 map <Leader>se :Sexplore<cr>
 map <Leader>he :Hexplore<cr>
 map <Leader>ve :Vexplore<cr>
 
 " last modifed datetime
+" TimeStamp 函数定义在后面
 map <Leader>L    :let @z=TimeStamp()<Cr>"zpa
 map <Leader>datetime :let @z=strftime("%Y-%m-%d %H:%M:%S")<Cr>"zpa
 map <Leader>date :let @z=strftime("%Y-%m-%d")<Cr>"zpa
@@ -274,6 +277,7 @@ map <M-Left> :tabnext<CR>
 map <M-Right> :tabprevious<CR>
 
 " Select all.
+" C ctrl 
 map <C-a> ggVG
 
 " Undo in insert mode. insert map
